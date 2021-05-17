@@ -1,0 +1,48 @@
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: baseline;
+    padding: 1rem;
+    height: 12vh;
+    background-color: #202020;
+    overflow: hidden;
+}
+
+.logo {
+    font-size: 1.3rem;
+    font-family: 'Fira', sans-serif;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo a {
+    text-decoration: none;
+    color: #94fdfd;
+}
+
+.navigation a {
+    text-decoration: none;
+    color: #74dacc;
+    font-size: 1rem;
+}
+
+.navigation ul {
+    list-style: none;
+}
+
+@media (min-width: 768px) {
+    .header {
+        justify-content: space-between;
+    }
+
+    .logo {
+        font-size: 2.5rem;
+    }
+
+    .navigation a {
+        font-size: 1.5rem;
+    }
+}

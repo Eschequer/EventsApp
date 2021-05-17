@@ -1,0 +1,51 @@
+import React, { useRef } from "react";
+import Button from "./ui/Button";
+import styles from "./EventsSearch.module.css";
+
+const EventsSearch = (props) => {
+  const yearInput = useRef();
+  const monthInput = useRef();
+
+  function clickHandler(e) {
+    e.preventDefault();
+
+    const selectedYear = yearInput.current.value;
+    const selectedMonth = monthInput.current.value;
+
+    props.searchHandler(selectedYear, selectedMonth);
+  }
+
+  return (
+    <form className={styles.form}>
+      <div className={styles.controls}>
+        <div className={styles.control}>
+          <label htmlFor="year">Year</label>
+          <select name="year" id="year" ref={yearInput}>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+          </select>
+        </div>
+        <div className={styles.control}>
+          <label htmlFor="month">Month</label>
+          <select name="month" id="month" ref={monthInput}>
+            <option value="1">January</option>
+            <option value="2">February</option>
+            <option value="3">March</option>
+            <option value="4">April</option>
+            <option value="5">May</option>
+            <option value="6">June</option>
+            <option value="7">July</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">October</option>
+            <option value="11">November</option>
+            <option value="12">December</option>
+          </select>
+        </div>
+        <Button clickHandler={clickHandler}>Find Events</Button>
+      </div>
+    </form>
+  );
+};
+
+export default EventsSearch;

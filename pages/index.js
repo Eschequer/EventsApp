@@ -1,11 +1,14 @@
 import React from "react";
+import { getAllEvents } from "../dummyEvents";
+import EventList from "../components/EventList";
 
-const IndexPage = () => {
+const HomePage = () => {
+  const events = getAllEvents();
   return (
     <div>
-      <h1>Home Page</h1>
+      <EventList events={events} />
     </div>
   );
 };
 
-export default IndexPage;
+export default HomePage;
