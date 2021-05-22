@@ -1,17 +1,48 @@
 import React from "react";
-import { useRouter } from "next/router";
-import { getFilteredEvents } from "../../dummyEvents";
+import Head from "next/head";
+import { getFilteredEvents } from "../../api-util";
 import EventList from "../../components/EventList";
 import ResultsTitle from "../../components/ResultsTitle";
 
-const FilteredEvents = () => {
-  const router = useRouter();
+const FilteredEvents = ({ filteredEvents, year, month }) => {
+  const date = new Date(year, month - 1);
 
-  const filterData = router.query.slug;
+  const headSection = (
+    <Head>
+      <title>Filtered Events</title>
+      {year && month ? (
+        <meta name="description" content={`Events for ${month}/${year}`} />
+      ) : (
+        <meta name="description" content="No events found" />
+      )}
+    </Head>
+  );
 
-  if (!filterData) {
-    return <p className="center">Loading</p>;
-  }
+  if (filteredEvents === null)
+    return (
+      <>
+        {headSection}
+        <p className="center">No events found!</p>
+      </>
+    );
+
+  return (
+    <>
+      {headSection}
+      <ResultsTitle date={date} />
+      <EventList events={filteredEvents} />
+    </>
+  );
+};
+
+export default FilteredEvents;
+
+export async function getServerSideProps(context) {
+  const { params } = context;
+
+  console.log(params);
+
+  const filterData = params.slug;
 
   const year = +filterData[0];
   const month = +filterData[1];
@@ -24,27 +55,33 @@ const FilteredEvents = () => {
     month < 1 ||
     month > 12
   ) {
-    return <p className="center">Invalid Filter! Please adjust your values!</p>;
+    return {
+      notFound: true,
+      /*redirect: {destination: "/error"}*/
+    };
   }
 
-  const filteredEvents = getFilteredEvents({
-    year,
-    month,
-  });
-
-  if (!filteredEvents || filteredEvents.length === 0)
-    return <p className="center">No events found!</p>;
-
-  console.log(filteredEvents);
-
-  const date = new Date(year, month - 1);
-
-  return (
-    <>
-      <ResultsTitle date={date} />
-      <EventList events={filteredEvents} />
-    </>
+  const filteredEvents = await getFilteredEvents(
+    {
+      year,
+      month,
+    },
+    "https://my-project-1543526494526.firebaseio.com/events.json"
   );
-};
 
-export default FilteredEvents;
+  if (!filteredEvents || filteredEvents.length === 0) {
+    return {
+      props: {
+        filteredEvents: null,
+      },
+    };
+  }
+
+  return {
+    props: {
+      filteredEvents,
+      year,
+      month,
+    },
+  };
+}

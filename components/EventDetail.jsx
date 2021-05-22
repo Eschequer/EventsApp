@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import styles from "./EventDetail.module.css";
 import DateIcon from "./icons/DateIcon";
 import AddressIcon from "./icons/AddressIcon";
@@ -14,7 +15,8 @@ const EventDetail = ({ title, date, location, image, description }) => {
       </section>
       <section className={styles.logistics}>
         <div className={styles.image}>
-          <img src={`/${image}`} alt={title} />
+          <Image src={`/${image}`} alt={title} width="340" height="160" />
+          {/* <img src={`/${image}`} alt={title} />*/}
         </div>
         <ul className={styles.list}>
           <li className={styles.item}>

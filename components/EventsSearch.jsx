@@ -42,8 +42,8 @@ const EventsSearch = (props) => {
             <option value="12">December</option>
           </select>
         </div>
-        <Button clickHandler={clickHandler}>Find Events</Button>
       </div>
+      <Button clickHandler={clickHandler}>Find Events</Button>
     </form>
   );
 };

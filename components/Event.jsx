@@ -10,7 +10,7 @@ const Event = ({ title, image, date, location, id }) => {
 
   return (
     <li className={styles.event}>
-      <img src={"/" + image} alt={title} />
+      <img src={"/" + image} alt={title} />*
       <div className={styles.content}>
         <div className={styles.info}>
           <h3>{title}</h3>
