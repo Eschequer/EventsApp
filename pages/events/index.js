@@ -1,11 +1,10 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { getAllEvents } from "../../dummyEvents";
+import { getEvents } from "../../api-util";
 import EventList from "../../components/EventList";
 import EventsSearch from "../../components/EventsSearch";
 
-const Events = () => {
-  const events = getAllEvents();
+const Events = ({ events }) => {
   const router = useRouter();
 
   function searchEventsHandler(year, month) {
@@ -23,3 +22,14 @@ const Events = () => {
 };
 
 export default Events;
+
+export async function getStaticProps() {
+  const events = await getEvents(
+    "https://my-project-1543526494526.firebaseio.com/events.json"
+  );
+
+  return {
+    props: { events },
+    revalidate: 60,
+  };
+}

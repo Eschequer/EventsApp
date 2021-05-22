@@ -3,3 +3,10 @@
     list-style: none;
     padding: 0;
 }
+
+@media (min-width: 768px) {
+   .eventList {
+       width: 70%;
+       margin: auto;
+   }
+}
